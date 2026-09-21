@@ -1,0 +1,297 @@
+:root {
+  --navy: #365f8d;
+  --dark-navy: #27496d;
+  --page: #f6f4ef;
+  --card: #ffffff;
+  --input: #eef3f1;
+  --text: #1c2b39;
+  --muted: #667085;
+  --border: #d8e0dc;
+  --red: #b54747;
+  --green: #2e7d5b;
+  --orange: #b56a1d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.main-header {
+  background: var(--navy);
+  color: white;
+  padding: 32px 7%;
+}
+
+.main-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.main-header p {
+  margin: 8px 0 0;
+  color: #e0eaf4;
+  font-size: 0.95rem;
+}
+
+.login-layout {
+  display: grid;
+  place-items: center;
+  min-height: 72vh;
+  padding: 24px;
+}
+
+.login-card,
+.panel,
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.login-card {
+  width: min(100%, 440px);
+  padding: 34px;
+}
+
+.login-card h2,
+.panel h2 {
+  margin-top: 0;
+}
+
+.login-card p,
+.login-card small {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.login-card small {
+  display: block;
+  margin-top: 18px;
+  font-size: 0.75rem;
+}
+
+.workspace {
+  width: min(1180px, 90%);
+  margin: 0 auto;
+  padding: 24px 0 44px;
+}
+
+.top-row,
+.task-header,
+.filters,
+.manage-grid,
+.delete-row {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+}
+
+.top-row {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-row p {
+  color: var(--navy);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.metric-card {
+  padding: 16px;
+}
+
+.metric-card span,
+label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 7px;
+}
+
+.metric-card strong {
+  display: block;
+  color: var(--navy);
+  font-size: 1.8rem;
+}
+
+.panel {
+  padding: 22px;
+  margin-top: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.form-grid div {
+  min-width: 0;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--input);
+  color: var(--text);
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--navy);
+  color: white;
+  cursor: pointer;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: var(--dark-navy);
+}
+
+.manage-grid {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+}
+
+.delete-row {
+  margin-top: 16px;
+  max-width: 410px;
+}
+
+.filters {
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.filters input {
+  flex: 1;
+}
+
+.filters select {
+  width: 210px;
+}
+
+.task-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--input);
+  margin-top: 10px;
+  padding: 16px;
+}
+
+.task-item h3 {
+  margin: 0 0 9px;
+  font-size: 1rem;
+}
+
+.task-item p {
+  margin: 5px 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.status {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  color: white;
+  margin-top: 8px;
+}
+
+.status-not-started {
+  background: var(--orange);
+}
+
+.status-in-progress {
+  background: var(--navy);
+}
+
+.status-completed {
+  background: var(--green);
+}
+
+.status-overdue {
+  background: var(--red);
+}
+
+#alert-message {
+  border-radius: 12px;
+  background: #fff0f0;
+  color: var(--red);
+  padding: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .main-header {
+    padding: 24px;
+  }
+
+  .main-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .workspace {
+    width: 92%;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid,
+  .manage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters,
+  .task-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filters select {
+    width: 100%;
+  }
+
+  .delete-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office Workflow Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <div id="login-screen">
+    <header class="main-header">
+      <h1>Office Workflow Tracker</h1>
+      <p>One simple workspace for administrators and staff.</p>
+    </header>
+
+    <main class="login-layout">
+      <section class="login-card">
+        <h2>Welcome</h2>
+        <p>Choose a demo account to enter the tracker.</p>
+
+        <label for="account-select">DEMO ACCOUNT</label>
+        <select id="account-select">
+          <option value="admin">admin</option>
+          <option value="ada">ada</option>
+          <option value="david">david</option>
+        </select>
+
+        <button id="continue-button">Continue</button>
+
+        <small>Admin sees every task. Staff see only their own tasks.</small>
+      </section>
+    </main>
+  </div>
+
+  <div id="workspace" class="hidden">
+    <header class="main-header">
+      <h1>Office Workflow Tracker</h1>
+      <p id="role-text">ADMIN VIEW</p>
+    </header>
+
+    <main class="workspace">
+      <div class="top-row">
+        <p id="welcome-text"></p>
+        <button id="logout-button">Log out</button>
+      </div>
+
+      <section class="metrics">
+        <article class="metric-card">
+          <span>TOTAL TASKS</span>
+          <strong id="total-tasks">0</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>NOT STARTED</span>
+          <strong id="not-started">0</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>IN PROGRESS</span>
+          <strong id="in-progress">0</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>COMPLETED</span>
+          <strong id="completed">0</strong>
+        </article>
+
+        <article class="metric-card">
+          <span>OVERDUE</span>
+          <strong id="overdue">0</strong>
+        </article>
+      </section>
+
+      <section id="admin-panel" class="panel">
+        <h2>Add a New Task</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="task-title">TASK TITLE</label>
+            <input id="task-title" type="text" placeholder="Enter task title">
+          </div>
+
+          <div>
+            <label for="task-person">PERSON RESPONSIBLE</label>
+            <input id="task-person" type="text" placeholder="Enter staff name">
+          </div>
+
+          <div>
+            <label for="task-deadline">DEADLINE</label>
+            <input id="task-deadline" type="date">
+          </div>
+
+          <div>
+            <label for="task-priority">PRIORITY</label>
+            <select id="task-priority">
+              <option>High</option>
+              <option selected>Medium</option>
+              <option>Low</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="add-task-button">Add Task</button>
+      </section>
+
+      <section id="manage-panel" class="panel">
+        <h2 id="manage-title">Manage a Task</h2>
+
+        <div class="manage-grid">
+          <div>
+            <label for="update-number">TASK NUMBER</label>
+            <input id="update-number" type="number" min="1" placeholder="1">
+          </div>
+
+          <div>
+            <label for="new-status">NEW STATUS</label>
+            <select id="new-status">
+              <option>Not started</option>
+              <option>In progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+
+          <button id="update-button">Update Status</button>
+        </div>
+
+        <div id="delete-area" class="delete-row">
+          <input id="delete-number" type="number" min="1" placeholder="Task number to delete">
+          <button id="delete-button">Delete Task</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="task-header">
+          <h2>Current Tasks</h2>
+          <button id="alerts-button">View Alerts</button>
+        </div>
+
+        <div class="filters">
+          <input id="search-box" type="text" placeholder="Search by task name or staff member">
+
+          <select id="filter-select">
+            <option value="all">All tasks</option>
+            <option value="overdue">Overdue</option>
+            <option value="not-started">Not started</option>
+            <option value="in-progress">In progress</option>
+            <option value="completed">Completed</option>
+            <option value="high">High priority</option>
+          </select>
+        </div>
+
+        <p id="alert-message" class="hidden"></p>
+        <div id="task-list"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
