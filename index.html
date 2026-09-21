@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Office Workflow Tracker</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=colour-theme-2">
   <script src="app.js" defer></script>
 </head>
 
@@ -20,14 +20,32 @@
         <h2>Welcome</h2>
         <p>Choose a demo account to enter the tracker.</p>
 
-        <label for="account-select">DEMO ACCOUNT</label>
-        <select id="account-select">
-          <option value="admin">admin</option>
-          <option value="ada">ada</option>
-          <option value="david">david</option>
-        </select>
+        <button id="choose-account-button" class="account-card account-chooser">
+          <span class="account-initial">→</span>
+          <span><strong>Choose an account</strong><small>Select Admin, Ada, David, or Dalu to enter the tracker.</small></span>
+        </button>
 
-        <button id="continue-button">Continue</button>
+        <div id="account-cards" class="account-cards hidden">
+          <button class="account-card account-admin" data-account="admin">
+            <span class="account-initial">A</span>
+            <span><strong>Admin</strong><small>Assign, create, delete, and review work.</small></span>
+          </button>
+
+          <button class="account-card account-ada" data-account="ada">
+            <span class="account-initial">A</span>
+            <span><strong>Ada</strong><small>Update your tasks and record daily work.</small></span>
+          </button>
+
+          <button class="account-card account-david" data-account="david">
+            <span class="account-initial">D</span>
+            <span><strong>David</strong><small>Update your tasks and record daily work.</small></span>
+          </button>
+
+          <button class="account-card account-dalu" data-account="dalu">
+            <span class="account-initial">D</span>
+            <span><strong>Dalu</strong><small>Update your tasks and record daily work.</small></span>
+          </button>
+        </div>
 
         <small>Admin sees every task. Staff see only their own tasks.</small>
       </section>
@@ -67,10 +85,6 @@
           <strong id="completed">0</strong>
         </article>
 
-        <article class="metric-card">
-          <span>OVERDUE</span>
-          <strong id="overdue">0</strong>
-        </article>
       </section>
 
       <section id="admin-panel" class="panel">
@@ -84,47 +98,31 @@
 
           <div>
             <label for="task-person">PERSON RESPONSIBLE</label>
-            <input id="task-person" type="text" placeholder="Enter staff name">
+            <select id="task-person">
+              <option value="">Choose a staff member</option>
+              <option>Ada</option>
+              <option>David</option>
+              <option>Dalu</option>
+            </select>
           </div>
 
+          <div>
+  <label for="task-unit">UNIT / DEPARTMENT</label>
+  <select id="task-unit">
+    <option>Operations</option>
+    <option>Accounts</option>
+    <option>Human Resources</option>
+    <option>Client Services</option>
+  </select>
+</div>
           <div>
             <label for="task-deadline">DEADLINE</label>
             <input id="task-deadline" type="date">
           </div>
 
-          <div>
-            <label for="task-priority">PRIORITY</label>
-            <select id="task-priority">
-              <option>High</option>
-              <option selected>Medium</option>
-              <option>Low</option>
-            </select>
-          </div>
         </div>
 
         <button id="add-task-button">Add Task</button>
-      </section>
-
-      <section id="manage-panel" class="panel">
-        <h2 id="manage-title">Manage a Task</h2>
-
-        <div class="manage-grid">
-          <div>
-            <label for="update-number">TASK NUMBER</label>
-            <input id="update-number" type="number" min="1" placeholder="1">
-          </div>
-
-          <div>
-            <label for="new-status">NEW STATUS</label>
-            <select id="new-status">
-              <option>Not started</option>
-              <option>In progress</option>
-              <option>Completed</option>
-            </select>
-          </div>
-
-          <button id="update-button">Update Status</button>
-        </div>
 
         <div id="delete-area" class="delete-row">
           <input id="delete-number" type="number" min="1" placeholder="Task number to delete">
@@ -132,10 +130,25 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section id="admin-activity-panel" class="panel hidden">
+        <div class="task-header">
+          <div>
+            <h2>Team Calendar</h2>
+            <p class="panel-note">Choose a day to review staff activity across every office unit.</p>
+          </div>
+          <div class="date-picker">
+            <label for="admin-activity-date">CHOOSE DATE</label>
+            <input id="admin-activity-date" type="date">
+          </div>
+        </div>
+
+        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="admin-activity-list"></div>
+      </section>
+
+      <section id="tasks-panel" class="panel">
         <div class="task-header">
           <h2>Current Tasks</h2>
-          <button id="alerts-button">View Alerts</button>
         </div>
 
         <div class="filters">
@@ -143,16 +156,67 @@
 
           <select id="filter-select">
             <option value="all">All tasks</option>
-            <option value="overdue">Overdue</option>
             <option value="not-started">Not started</option>
             <option value="in-progress">In progress</option>
             <option value="completed">Completed</option>
-            <option value="high">High priority</option>
           </select>
         </div>
 
-        <p id="alert-message" class="hidden"></p>
         <div id="task-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="task-detail-screen" class="hidden">
+    <header class="main-header">
+      <h1>Task Details</h1>
+      <p>Your assigned task and work record.</p>
+    </header>
+
+    <main class="task-detail-layout">
+      <button id="back-to-tasks-button">← Back to My Tasks</button>
+
+      <section class="task-detail-card">
+        <p class="eyebrow">ASSIGNED TASK</p>
+        <h2 id="task-detail-title"></h2>
+        <div class="task-detail-meta">
+          <div><span>UNIT</span><strong id="task-detail-unit"></strong></div>
+          <div><span>DUE DATE</span><strong id="task-detail-deadline"></strong></div>
+          <div>
+            <span>STATUS</span>
+            <select id="task-detail-status">
+              <option>Not started</option>
+              <option>In progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section id="work-update-panel" class="panel">
+        <div class="task-header">
+          <div>
+            <h2 id="work-update-title">Task Work Update</h2>
+            <p id="selected-task-note" class="panel-note">Record the work you completed for this task.</p>
+          </div>
+        </div>
+
+        <div class="form-grid work-update-grid">
+          <div>
+            <label for="work-date">DATE</label>
+            <input id="work-date" type="date">
+          </div>
+          <div>
+            <label for="work-client">CLIENT OR CASE</label>
+            <input id="work-client" type="text" placeholder="For example: Greenfield Ltd">
+          </div>
+          <div class="work-summary-field">
+            <label for="work-summary">WHAT DID YOU WORK ON?</label>
+            <textarea id="work-summary" rows="4" placeholder="Briefly describe the work completed or the next action."></textarea>
+          </div>
+        </div>
+
+        <button id="save-work-update-button">Save Work Update</button>
       </section>
     </main>
   </div>
